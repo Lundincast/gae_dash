@@ -2,6 +2,8 @@
 .Python
 env/
 
+gae_dash/__pycache__/settings.cpython-35.pyc
+
 .env
 db.sqlite3
 .idea/

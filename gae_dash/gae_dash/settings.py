@@ -25,7 +25,7 @@ SECRET_KEY = 'u*yo*%6@qh^wnhhc0(2-6326o=dubne4$ng7ek50fa4w)c%+dp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -86,7 +86,7 @@ except ImportError:
     pymysql.install_as_MySQLdb()
 
 # [START db_setup]
-if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
+if os.getenv('GAE_ENV', '') == 'standard':
     # Running on production App Engine, so connect to Google Cloud SQL using
     # the unix socket at /cloudsql/<your-cloudsql-connection string>
     DATABASES = {
@@ -154,4 +154,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'static'))
 STATIC_URL = '/static/'

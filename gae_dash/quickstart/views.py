@@ -2,6 +2,10 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from quickstart.serializers import UserSerializer, GroupSerializer
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+import os
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -17,3 +21,14 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+
+@api_view(['GET'])
+def env_variables(request):
+    """
+    API endpoint that retrieves available environment variables.
+    """
+    var_dict = {}
+    for var in os.environ.keys():
+        var_dict[var] = os.environ.get(var)
+    return Response(var_dict)

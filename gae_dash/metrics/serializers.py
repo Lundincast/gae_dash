@@ -12,3 +12,10 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
         fields = ('url', 'name')
+
+
+class ResourceDescriptorSerializer(serializers.Serializer):
+    type = serializers.CharField(max_length=500)
+    display_name = serializers.CharField(max_length=500)
+    description = serializers.CharField(max_length=500)
+    name = serializers.CharField(max_length=500)

@@ -27,5 +27,6 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
     path('env_var', views.environment_variables),
-    path('monitored_resource_types', views.monitored_resource_types)
+    path('monitored_resource_types', views.monitored_resource_types),
+    path('application_details', views.application_details)
 ]

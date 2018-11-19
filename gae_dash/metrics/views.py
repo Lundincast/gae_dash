@@ -3,11 +3,14 @@ from rest_framework import viewsets
 from metrics.serializers import UserSerializer, GroupSerializer, ResourceDescriptorSerializer
 
 from google.cloud import monitoring_v3
+from google.auth import compute_engine
+from google.auth.transport.requests import AuthorizedSession
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 import os
+import requests
 import json
 from datetime import datetime, timedelta
 
@@ -64,3 +67,15 @@ class monitored_resource_descriptor(object):
         self.description = description
         self.name = name
 
+
+@api_view(['GET'])
+def application_details(request):
+    """
+    API endpoint that gets information about the running application
+    """
+    credentials = compute_engine.Credentials()
+    authed_session = AuthorizedSession(credentials)
+
+    res = authed_session.get('https://appengine.googleapis.com/v1/apps/digaaa-staging')
+
+    return Response(res.text)

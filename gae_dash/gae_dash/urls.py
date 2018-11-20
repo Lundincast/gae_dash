@@ -28,5 +28,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('env_var', views.environment_variables),
     path('monitored_resource_types', views.monitored_resource_types),
-    path('application_details', views.application_details)
+    path('application_details', views.application_details),
+    path('services', views.services_list),
+    path('services/<service>', views.service_details),
+    path('services/<service>/versions', views.versions_list),
+    path('services/<service>/versions/<version>', views.version_details),
+    path('services/<service>/versions/<version>/instances', views.instances_list),
+    path('services/<service>/versions/<version>/instances/<instance>', views.instance_details),
 ]

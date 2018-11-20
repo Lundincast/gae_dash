@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
+
 from metrics.serializers import UserSerializer, GroupSerializer, ResourceDescriptorSerializer
 
 from google.cloud import monitoring_v3
@@ -76,6 +77,84 @@ def application_details(request):
     credentials = compute_engine.Credentials()
     authed_session = AuthorizedSession(credentials)
 
-    res = authed_session.get('https://appengine.googleapis.com/v1/apps/digaaa-staging')
+    res = authed_session.get('https://appengine.googleapis.com/v1/apps/{}'.format(os.environ.get("GOOGLE_CLOUD_PROJECT")))
 
-    return Response(res.text)
+    return Response(res.json())
+
+
+@api_view(['GET'])
+def services_list(request):
+    """
+    API endpoint that lists the services for the current application
+    """
+    credentials = compute_engine.Credentials()
+    authed_session = AuthorizedSession(credentials)
+
+    res = authed_session.get('https://appengine.googleapis.com/v1/apps/{}/services'.format(os.environ.get("GOOGLE_CLOUD_PROJECT")))
+
+    return Response(res.json())
+
+
+@api_view(['GET'])
+def service_details(request, service):
+    """
+    API endpoint that lists the services for the current application
+    """
+    credentials = compute_engine.Credentials()
+    authed_session = AuthorizedSession(credentials)
+
+    res = authed_session.get('https://appengine.googleapis.com/v1/apps/{}/services/{}'.format(os.environ.get("GOOGLE_CLOUD_PROJECT"), service))
+
+    return Response(res.json())
+
+
+@api_view(['GET'])
+def versions_list(request, service):
+    """
+    API endpoint that lists the versions of a service
+    """
+    credentials = compute_engine.Credentials()
+    authed_session = AuthorizedSession(credentials)
+
+    res = authed_session.get('https://appengine.googleapis.com/v1/apps/{}/services/{}/versions'.format(os.environ.get("GOOGLE_CLOUD_PROJECT"), service))
+
+    return Response(res.json())
+
+
+@api_view(['GET'])
+def version_details(request, service, version):
+    """
+    API endpoint that lists the versions of a service
+    """
+    credentials = compute_engine.Credentials()
+    authed_session = AuthorizedSession(credentials)
+
+    res = authed_session.get('https://appengine.googleapis.com/v1/apps/{}/services/{}/versions/{}'.format(os.environ.get("GOOGLE_CLOUD_PROJECT"), service, version))
+
+    return Response(res.json())
+
+
+@api_view(['GET'])
+def instances_list(request, service, version):
+    """
+    API endpoint that lists the versions of a service
+    """
+    credentials = compute_engine.Credentials()
+    authed_session = AuthorizedSession(credentials)
+
+    res = authed_session.get('https://appengine.googleapis.com/v1/apps/{}/services/{}/versions/{}/instances'.format(os.environ.get("GOOGLE_CLOUD_PROJECT"), service, version))
+
+    return Response(res.json())
+
+
+@api_view(['GET'])
+def instance_details(request, service, version, instance):
+    """
+    API endpoint that lists the versions of a service
+    """
+    credentials = compute_engine.Credentials()
+    authed_session = AuthorizedSession(credentials)
+
+    res = authed_session.get('https://appengine.googleapis.com/v1/apps/{}/services/{}/versions/{}/instances/{}'.format(os.environ.get("GOOGLE_CLOUD_PROJECT"), service, version, instance))
+
+    return Response(res.json())
